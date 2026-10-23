@@ -47,8 +47,21 @@ Analisi statica: [docs/ANALYSIS.md](docs/ANALYSIS.md).
 ## Elenco automatico delle patch
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0-dev.1](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/releases/tag/v1.0.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
+<details open>
+<summary>📦 Outdooractive&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
+<br>
 
-L'elenco viene compilato dal workflow della prima release.
+**🎯 Supported versions:**
+
+| 3.23.20 |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Outdooractive - Diagnostica abbonamento](#outdooractive-diagnostica-abbonamento) | Registra in Logcat il livello e i controlli Pro, senza modificare i risultati. |  |
+
+</details>
 
 <!-- PATCHES_END -->
 
