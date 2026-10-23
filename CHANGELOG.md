@@ -1,3 +1,9 @@
+## [1.0.0-dev.2](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-10-23)
+
+### 🐛 Bug Fixes
+
+* compact and deduplicate membership diagnostics ([ef8b7d9](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/commit/ef8b7d974f23148420d0c4c61774c629d46f0977))
+
 ## 1.0.0-dev.1 (2026-10-23)
 
 ### ✨ New Features

@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-23T12:24:42",
-  "description": "## 1.0.0-dev.1 (2026-10-23)\n\n### ✨ New Features\n\n* prepare first membership diagnostic test release ([ab9c603](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/commit/ab9c603dead7a9b8ad8b95ce0a243a82fa712a4a))",
-  "download_url": "https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/releases/download/v1.0.0-dev.1/patches-1.0.0-dev.1.mpp",
+  "created_at": "2026-10-23T12:46:12",
+  "description": "## [1.0.0-dev.2](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-10-23)\n\n### 🐛 Bug Fixes\n\n* compact and deduplicate membership diagnostics ([ef8b7d9](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/commit/ef8b7d974f23148420d0c4c61774c629d46f0977))",
+  "download_url": "https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/releases/download/v1.0.0-dev.2/patches-1.0.0-dev.2.mpp",
   "signature_download_url": "",
-  "version": "1.0.0-dev.1"
+  "version": "1.0.0-dev.2"
 }
