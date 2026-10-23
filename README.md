@@ -10,7 +10,7 @@ Repository indipendente per analizzare le chiamate ai controlli di abbonamento d
 
 | Nome in Morphe | Funzione |
 | --- | --- |
-| **Outdooractive - Diagnostica abbonamento** | Stampa in Logcat il risultato originale di `Membership.isProUser()` e `Membership.getLevel()` e lo stack dei chiamanti. |
+| **Outdooractive - Diagnostica abbonamento** | Stampa in Logcat il risultato originale di `Membership.isProUser()` e `Membership.getLevel()` e il solo chiamante diretto, una volta per combinazione di metodo, valore e chiamante. |
 
 Non modifica i valori, le richieste di rete, gli acquisti o le autorizzazioni server.
 
@@ -28,11 +28,11 @@ adb logcat -s OA-Membership:I '*:S'
 Esempio (dipende dall'account):
 
 ```text
-OA-Membership: isProUser = false
-OA-Membership: getLevel = 0
+OA-Membership: isProUser = false | caller: tdk.H(UserBarrier.kt:10)
+OA-Membership: getLevel = 0 | caller: mek.w(UserMapsLiveData.kt:9)
 ```
 
-I messaggi includono uno stack trace per individuare il chiamante: usare la patch soltanto per un test breve e oscurare eventuali dati sensibili prima di condividere il log. La diagnostica può rallentare i percorsi che chiamano spesso i getter.
+I messaggi includono il **chiamante diretto su una sola riga**. Le combinazioni già registrate vengono ignorate fino al riavvio del processo. Il logger crea ancora un breve stack in memoria per individuare il chiamante: usare la patch solo durante i test e oscurare eventuali dati sensibili.
 
 ## Sviluppo
 
@@ -47,8 +47,21 @@ Analisi statica: [docs/ANALYSIS.md](docs/ANALYSIS.md).
 ## Elenco automatico delle patch
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0-dev.4](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/releases/tag/v1.0.0-dev.4)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
+<details open>
+<summary>📦 Outdooractive&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
+<br>
 
-L'elenco viene compilato dal workflow della prima release.
+**🎯 Supported versions:**
+
+| 3.23.20 |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Outdooractive - Diagnostica abbonamento](#outdooractive-diagnostica-abbonamento) | Registra in Logcat il livello e i controlli Pro, senza modificare i risultati. |  |
+
+</details>
 
 <!-- PATCHES_END -->
 

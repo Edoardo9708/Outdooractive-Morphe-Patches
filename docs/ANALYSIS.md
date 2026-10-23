@@ -30,7 +30,7 @@ La verifica degli accessi premium può avvenire ulteriormente lato backend.
 
 ## Patch diagnostica
 
-Il logger stampa valore e traccia di chiamata con tag `OA-Membership`, senza cambiare stato o return dei getter.
+Il logger stampa valore e **solo chiamante diretto**, tutto su una riga con tag `OA-Membership`. Usa una mappa concorrente per non ripetere la stessa combinazione di metodo, valore e chiamante durante la stessa esecuzione del processo; non cambia stato o return dei getter.
 Il fingerprint è ristretto esattamente al bytecode della versione 3.23.20 e fallisce se le istruzioni non coincidono.
 
 ## Da verificare su dispositivo
@@ -38,7 +38,7 @@ Il fingerprint è ristretto esattamente al bytecode della versione 3.23.20 e fal
 - Compilazione della patch Morphe con il template aggiornato.
 - Corretta applicazione alla versione supportata.
 - Quali schermate chiamano i due getter.
-- Frequenza, eventuali ritardi e comportamento delle mappe.
+- Frequenza, eventuali ritardi e comportamento delle mappe (la nuova diagnostica non ripete le chiamate uguali).
 - Quali funzionalità richiedono autorizzazioni remote.
 
 Non archiviare credenziali, cookie, posizioni o risposte API nei log.
