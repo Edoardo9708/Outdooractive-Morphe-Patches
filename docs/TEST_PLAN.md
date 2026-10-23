@@ -22,7 +22,7 @@ adb logcat -s OA-Membership:I '*:S'
 ```
 
 Esempio indicativo: `isProUser = false` o `getLevel = 0`; i risultati effettivi dipendono dall'account.
-Le eccezioni nel log sono **stack diagnostici** generati da `Throwable`, non indicano necessariamente un crash.
+La patch nuova scrive **una riga per combinazione distinta** di metodo, valore e chiamante. Crea uno stack temporaneo in memoria, ma non stampa più eccezioni; le ripetizioni sono ignorate fino al riavvio del processo.
 
 ## Criteri di successo
 
@@ -30,7 +30,7 @@ Le eccezioni nel log sono **stack diagnostici** generati da `Throwable`, non ind
 - L'app si apre e le schermate abituali continuano a funzionare.
 - Il tag `OA-Membership` compare nel log quando i getter sono chiamati.
 - I valori restituiti dall'app non sono alterati.
-- Le chiamate e le loro tracce permettono di individuare i componenti che consultano `Membership`.
+- Le righe contenenti il chiamante diretto permettono di individuare i componenti che consultano `Membership`.
 
 ## Limiti
 
