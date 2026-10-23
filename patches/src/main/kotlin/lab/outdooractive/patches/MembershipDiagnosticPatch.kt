@@ -118,7 +118,8 @@ val membershipDiagnosticPatch = bytecodePatch(
 
                     # Registro libero per un valore dimostrativo.
                     const/4 v1, 0x${example.toString(16)}
-                    return v0
+                    #return v0
+                    return v1
                     """.trimIndent()
                 )
             }
