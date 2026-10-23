@@ -1,3 +1,9 @@
+## [1.0.0-dev.4](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2026-10-23)
+
+### 🐛 Bug Fixes
+
+* changed return ([bab86cd](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/commit/bab86cd8301ae56a7874960708581b79ff02bb92))
+
 ## [1.0.0-dev.3](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2026-10-23)
 
 ### 🐛 Bug Fixes
