@@ -1,3 +1,9 @@
+## [1.0.0-dev.3](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2026-10-23)
+
+### 🐛 Bug Fixes
+
+* reserve test registers in Membership getters ([6597887](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/commit/659788743178e185af84fef7c76cda3374b5336d))
+
 ## [1.0.0-dev.2](https://github.com/Edoardo9708/Outdooractive-Morphe-Patches/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-10-23)
 
 ### 🐛 Bug Fixes
