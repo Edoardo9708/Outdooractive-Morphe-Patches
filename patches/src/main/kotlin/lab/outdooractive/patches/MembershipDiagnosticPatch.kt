@@ -12,6 +12,8 @@ import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.builder.MutableMethodImplementation
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
+import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import com.android.tools.smali.dexlib2.immutable.ImmutableField
 import com.android.tools.smali.dexlib2.immutable.ImmutableMethod
 import com.android.tools.smali.dexlib2.immutable.ImmutableMethodParameter
@@ -64,21 +66,28 @@ val membershipDiagnosticPatch = bytecodePatch(
             name: String,
             opcode: Opcode,
             type: String,
-            helper: String
+            fieldName: String,
+            helper: String,
+            example: Int
         ) {
             val method = Fingerprint(definingClass = target, name = name).method
             val body = method.implementation ?: error("$name: missing bytecode")
             val instructions = body.instructions.toList()
+            val fieldRead = instructions.firstOrNull() as? TwoRegisterInstruction
+            val reference = (instructions.firstOrNull() as? ReferenceInstruction)?.reference as? FieldReference
+            val returning = instructions.getOrNull(1) as? OneRegisterInstruction
 
-            // Interrompi la patch se il DEX non corrisponde a quello studiato.
-            require(body.registerCount == 1 && instructions.size == 2) {
-                "$name: unexpected register or instruction layout"
-            }
-            val fieldRead = instructions[0] as? TwoRegisterInstruction
-            val returning = instructions[1] as? OneRegisterInstruction
+            // Nella versione analizzata v0 e p0 sono lo stesso registro.
+            // Ricreiamo il getter con tre registri:
+            // v0 = valore originale, v1 = prova libera, p0 = this (alias v2).
             require(
+                body.registerCount == 1 &&
+                instructions.size == 2 &&
+                method.parameterTypes.isEmpty() &&
                 instructions[0].opcode == opcode &&
                 fieldRead?.registerA == 0 && fieldRead.registerB == 0 &&
+                reference?.definingClass == target &&
+                reference.name == fieldName && reference.type == type &&
                 instructions[1].opcode == Opcode.RETURN &&
                 returning?.registerA == 0 &&
                 method.returnType == type
@@ -89,8 +98,37 @@ val membershipDiagnosticPatch = bytecodePatch(
                 "$name: diagnostic helper already exists"
             }
 
-            // Invoca un logger void con v0; la return v0 originale resta intatta.
-            method.addInstructions(1, "invoke-static {v0}, $target->$helper($type)V")
+            // Il registerCount dell'implementazione esistente è immutabile.
+            // Copiamo firma, flag e annotazioni, creando i tre registri.
+            val modified = ImmutableMethod(
+                target,
+                name,
+                method.parameters,
+                method.returnType,
+                method.accessFlags,
+                method.annotations,
+                method.hiddenApiRestrictions,
+                MutableMethodImplementation(3)
+            ).toMutable().apply {
+                addInstructions(
+                    0,
+                    """
+                    iget${if (type == "Z") "-boolean" else ""} v0, p0, $target->$fieldName:$type
+                    invoke-static {v0}, $target->$helper($type)V
+
+                    # Registro libero per un valore dimostrativo.
+                    const/4 v1, 0x${example.toString(16)}
+                    return v0
+                    """.trimIndent()
+                )
+            }
+
+            require(targetClass.methods.remove(method)) {
+                "$name: original getter not present in target class"
+            }
+            require(targetClass.methods.add(modified)) {
+                "$name: failed to register patched getter"
+            }
         }
 
         fun addLogger(helper: String, type: String, label: String) {
@@ -164,8 +202,8 @@ val membershipDiagnosticPatch = bytecodePatch(
             )
         }
 
-        instrumentGetter("isProUser", Opcode.IGET_BOOLEAN, "Z", "morpheDiagPro")
-        instrumentGetter("getLevel", Opcode.IGET, "I", "morpheDiagLevel")
+        instrumentGetter("isProUser", Opcode.IGET_BOOLEAN, "Z", "isProUser", "morpheDiagPro", 1)
+        instrumentGetter("getLevel", Opcode.IGET, "I", "level", "morpheDiagLevel", 2)
         addLogger("morpheDiagPro", "Z", "isProUser = ")
         addLogger("morpheDiagLevel", "I", "getLevel = ")
     }
